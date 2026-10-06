@@ -1,6 +1,6 @@
 'use strict';
 
-// â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── State ──────────────────────────────────────────────────
 let state = {
   businesses: [],
   settings: {
@@ -11,7 +11,7 @@ let state = {
   searchQuery: ''
 };
 
-// â”€â”€ Persistence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Persistence ────────────────────────────────────────────
 function loadState() {
   try {
     const biz = localStorage.getItem('nfc_businesses');
@@ -36,7 +36,7 @@ function saveSettings() {
   try { localStorage.setItem('nfc_settings', JSON.stringify(state.settings)); } catch (e) {}
 }
 
-// â”€â”€ Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Navigation ─────────────────────────────────────────────
 function navigateTo(page) {
   state.currentPage = page;
 
@@ -59,7 +59,7 @@ document.querySelectorAll('[data-page]').forEach(btn => {
   btn.addEventListener('click', () => navigateTo(btn.dataset.page));
 });
 
-// â”€â”€ Computed values â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Computed values ────────────────────────────────────────
 function getStats() {
   const sold     = state.businesses.length;
   const revenue  = state.businesses.reduce((s, b) => s + (b.salePrice || 0), 0);
@@ -74,7 +74,7 @@ function getStats() {
   return { sold, revenue, costPerCard, costSold, profit, available, margin };
 }
 
-// â”€â”€ Formatting â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Formatting ─────────────────────────────────────────────
 function fmt$(n) {
   if (n === null || n === undefined) return '$0';
   return '$' + Math.round(n).toLocaleString('es-AR');
@@ -88,7 +88,7 @@ function fmtDate(d) {
   } catch { return d; }
 }
 
-// â”€â”€ renderAll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── renderAll ──────────────────────────────────────────────
 function renderAll() {
   const s = getStats();
 
@@ -121,7 +121,7 @@ function renderAll() {
 
 function el(id) { return document.getElementById(id); }
 
-// â”€â”€ Recent (dashboard) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Recent (dashboard) ──────────────────────────────────────
 function renderRecent() {
   const container = el('recent-list');
   if (!container) return;
@@ -133,8 +133,8 @@ function renderRecent() {
   if (!last5.length) {
     container.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon">ðŸª</div>
-        <p>TodavÃ­a no agregaste ningÃºn negocio</p>
+        <div class="empty-icon">🏪</div>
+        <p>Todavía no agregaste ningún negocio</p>
         <button class="btn-primary" onclick="openModal()">Agregar primer negocio</button>
       </div>`;
     return;
@@ -151,7 +151,7 @@ function renderRecent() {
   `).join('');
 }
 
-// â”€â”€ Businesses grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Businesses grid ────────────────────────────────────────
 function renderBusinesses() {
   const container = el('businesses-grid');
   if (!container) return;
@@ -165,17 +165,17 @@ function renderBusinesses() {
 
   if (!list.length) {
     container.innerHTML = state.searchQuery
-      ? `<div class="empty-state"><div class="empty-icon">ðŸ”</div><p>No hay resultados para "${esc(state.searchQuery)}"</p></div>`
-      : `<div class="empty-state"><div class="empty-icon">ðŸª</div><p>No hay negocios cargados todavÃ­a</p><button class="btn-primary" onclick="openModal()">Agregar primer negocio</button></div>`;
+      ? `<div class="empty-state"><div class="empty-icon">🔍</div><p>No hay resultados para "${esc(state.searchQuery)}"</p></div>`
+      : `<div class="empty-state"><div class="empty-icon">🏪</div><p>No hay negocios cargados todavía</p><button class="btn-primary" onclick="openModal()">Agregar primer negocio</button></div>`;
     return;
   }
 
   container.innerHTML = list.map(b => {
     const reviewLink = b.reviewLink || (b.placeId ? reviewUrl(b.placeId) : '');
     const links = [];
-    if (reviewLink)  links.push(`<a href="${reviewLink}" target="_blank" class="biz-link review">â­ Google Review</a>`);
-    if (b.mapsLink)  links.push(`<a href="${esc(b.mapsLink)}" target="_blank" class="biz-link maps">ðŸ“ Maps</a>`);
-    if (reviewLink)  links.push(`<button class="biz-link nfc-copy" onclick="copyText('${reviewLink}', 'Link copiado')">ðŸ“‹ Copiar link NFC</button>`);
+    if (reviewLink)  links.push(`<a href="${reviewLink}" target="_blank" class="biz-link review">⭐ Google Review</a>`);
+    if (b.mapsLink)  links.push(`<a href="${esc(b.mapsLink)}" target="_blank" class="biz-link maps">📍 Maps</a>`);
+    if (reviewLink)  links.push(`<button class="biz-link nfc-copy" onclick="copyText('${reviewLink}', 'Link copiado')">📋 Copiar link NFC</button>`);
 
     return `
       <div class="biz-card">
@@ -185,8 +185,8 @@ function renderBusinesses() {
             ${b.soldDate ? `<div class="biz-date">Vendido el ${fmtDate(b.soldDate)}</div>` : ''}
           </div>
           <div class="biz-actions">
-            <button class="btn-icon" onclick="openModal('${b.id}')" title="Editar">âœï¸</button>
-            <button class="btn-icon danger" onclick="deleteBusiness('${b.id}')" title="Eliminar">ðŸ—‘ï¸</button>
+            <button class="btn-icon" onclick="openModal('${b.id}')" title="Editar">✏️</button>
+            <button class="btn-icon danger" onclick="deleteBusiness('${b.id}')" title="Eliminar">🗑️</button>
           </div>
         </div>
         <div class="biz-price-row">
@@ -205,14 +205,14 @@ function filterBusinesses() {
   renderBusinesses();
 }
 
-// â”€â”€ NFC page businesses â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── NFC page businesses ────────────────────────────────────
 function renderNfcBizList() {
   const container = el('nfc-biz-list');
   if (!container) return;
 
   const withPid = state.businesses.filter(b => b.placeId || b.reviewLink);
   if (!withPid.length) {
-    container.innerHTML = `<div class="empty-state"><p>AgregÃ¡ negocios con Place ID para verlos acÃ¡</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>Agregá negocios con Place ID para verlos acá</p></div>`;
     return;
   }
 
@@ -225,8 +225,8 @@ function renderNfcBizList() {
           ${b.placeId ? `<div class="nfc-biz-pid">${esc(b.placeId)}</div>` : ''}
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
-          ${link ? `<a href="${link}" target="_blank" class="btn-outline-blue" style="font-size:11px;padding:5px 10px">â­ Ver review</a>` : ''}
-          ${link ? `<button class="btn-ghost-sm" onclick="loadPlaceId('${b.placeId || ''}','${link}')">ðŸ“‹ Cargar</button>` : ''}
+          ${link ? `<a href="${link}" target="_blank" class="btn-outline-blue" style="font-size:11px;padding:5px 10px">⭐ Ver review</a>` : ''}
+          ${link ? `<button class="btn-ghost-sm" onclick="loadPlaceId('${b.placeId || ''}','${link}')">📋 Cargar</button>` : ''}
         </div>
       </div>
     `;
@@ -238,11 +238,11 @@ function loadPlaceId(pid, link) {
   if (inp) { inp.value = pid; generateNfcLink(); }
   if (!pid && link) {
     const fullInp = el('full-link-input');
-    if (fullInp) { fullInp.value = link; el('copy-btn').disabled = false; el('link-id-display').textContent = link.split('placeid=')[1] || 'â€”'; }
+    if (fullInp) { fullInp.value = link; el('copy-btn').disabled = false; el('link-id-display').textContent = link.split('placeid=')[1] || '—'; }
   }
 }
 
-// â”€â”€ Steppers (+ / âˆ’) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Steppers (+ / −) ───────────────────────────────────────
 function stepNumber(inputEl, delta, min) {
   let v = parseFloat(inputEl.value) || 0;
   v = Math.max(min, v + delta);
@@ -272,13 +272,13 @@ function adjustPrice(delta) {
   stepNumber(inp, delta, 0);
 }
 
-// â”€â”€ Finanzas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Finanzas ───────────────────────────────────────────────
 function renderFinanzas(s) {
   if (!s) s = getStats();
 
   el('cost-per-card')   && (el('cost-per-card').textContent   = fmt$(s.costPerCard));
   el('pl-income')       && (el('pl-income').textContent       = fmt$(s.revenue));
-  el('pl-cost-sold')    && (el('pl-cost-sold').textContent    = 'âˆ’' + fmt$(s.costSold));
+  el('pl-cost-sold')    && (el('pl-cost-sold').textContent    = '−' + fmt$(s.costSold));
   el('pl-net')          && (el('pl-net').textContent          = fmt$(s.profit));
 
   if (el('pl-net')) {
@@ -308,7 +308,7 @@ function renderSalesList(s) {
   const list = [...state.businesses].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   if (!list.length) {
-    container.innerHTML = `<div class="empty-state"><p>AgregÃ¡ negocios para ver el detalle</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p>Agregá negocios para ver el detalle</p></div>`;
     return;
   }
 
@@ -330,7 +330,7 @@ function renderSalesList(s) {
   }).join('');
 }
 
-// â”€â”€ Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Modal ──────────────────────────────────────────────────
 function openModal(id) {
   const overlay = el('modal-overlay');
   overlay.classList.remove('hidden');
@@ -375,8 +375,8 @@ function overlayClose(e) {
 function saveBusiness() {
   const name  = el('f-name').value.trim();
   const price = parseFloat(el('f-price').value);
-  if (!name) { el('f-name').focus(); showToast('âš ï¸ IngresÃ¡ el nombre del negocio'); return; }
-  if (isNaN(price) || price < 0) { el('f-price').focus(); showToast('âš ï¸ IngresÃ¡ un precio vÃ¡lido'); return; }
+  if (!name) { el('f-name').focus(); showToast('⚠️ Ingresá el nombre del negocio'); return; }
+  if (isNaN(price) || price < 0) { el('f-price').focus(); showToast('⚠️ Ingresá un precio válido'); return; }
 
   const id      = el('edit-id').value || uid();
   const placeId = el('f-placeid').value.trim();
@@ -398,13 +398,13 @@ function saveBusiness() {
   if (idx >= 0) {
     obj.createdAt = state.businesses[idx].createdAt;
     state.businesses[idx] = obj;
-    showToast('âœ… Negocio actualizado');
+    showToast('✅ Negocio actualizado');
   } else {
     if (state.businesses.length >= state.settings.cardsBought) {
-      if (!confirm(`Ya vendiste ${state.settings.cardsBought} tarjetas (tu total comprado). Â¿QuerÃ©s igualmente agregar este negocio?`)) return;
+      if (!confirm(`Ya vendiste ${state.settings.cardsBought} tarjetas (tu total comprado). ¿Querés igualmente agregar este negocio?`)) return;
     }
     state.businesses.push(obj);
-    showToast('âœ… Negocio agregado');
+    showToast('✅ Negocio agregado');
   }
 
   saveBizData();
@@ -415,11 +415,11 @@ function saveBusiness() {
 function deleteBusiness(id) {
   const b = state.businesses.find(x => x.id === id);
   if (!b) return;
-  if (!confirm(`Â¿Eliminar "${b.name}"? Esta acciÃ³n no se puede deshacer.`)) return;
+  if (!confirm(`¿Eliminar "${b.name}"? Esta acción no se puede deshacer.`)) return;
   state.businesses = state.businesses.filter(x => x.id !== id);
   saveBizData();
   renderAll();
-  showToast('ðŸ—‘ï¸ Negocio eliminado');
+  showToast('🗑️ Negocio eliminado');
 }
 
 function autoFillReview() {
@@ -433,7 +433,7 @@ function autoFillReview() {
   }
 }
 
-// â”€â”€ NFC link generator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── NFC link generator ─────────────────────────────────────
 function generateNfcLink() {
   const pid     = (el('place-id-input')?.value || '').trim();
   const display = el('link-id-display');
@@ -441,7 +441,7 @@ function generateNfcLink() {
   const copyBtn = el('copy-btn');
 
   if (!pid) {
-    if (display) display.textContent = 'â€”';
+    if (display) display.textContent = '—';
     if (fullInp) fullInp.value = 'https://search.google.com/local/writereview?placeid=';
     if (copyBtn) copyBtn.disabled = true;
     return;
@@ -456,7 +456,7 @@ function generateNfcLink() {
 function copyNfcLink() {
   const url = el('full-link-input')?.value;
   if (!url || url === 'https://search.google.com/local/writereview?placeid=') return;
-  copyText(url, 'âœ… Link copiado. Pegalo en NFC Tools');
+  copyText(url, '✅ Link copiado. Pegalo en NFC Tools');
   const toast = el('copy-toast');
   if (toast) {
     toast.classList.remove('hidden');
@@ -473,7 +473,7 @@ function openPlaceFinder() {
   window.open('https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder', '_blank');
 }
 
-// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Helpers ────────────────────────────────────────────────
 function reviewUrl(pid) {
   return `https://search.google.com/local/writereview?placeid=${encodeURIComponent(pid)}`;
 }
@@ -497,7 +497,7 @@ function esc(str) {
 function copyText(text, msg) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text)
-      .then(() => showToast(msg || 'ðŸ“‹ Copiado'))
+      .then(() => showToast(msg || '📋 Copiado'))
       .catch(() => fallbackCopy(text, msg));
   } else {
     fallbackCopy(text, msg);
@@ -510,14 +510,14 @@ function fallbackCopy(text, msg) {
   ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
   document.body.appendChild(ta);
   ta.focus(); ta.select();
-  try { document.execCommand('copy'); showToast(msg || 'ðŸ“‹ Copiado'); }
-  catch { showToast('âš ï¸ No se pudo copiar'); }
+  try { document.execCommand('copy'); showToast(msg || '📋 Copiado'); }
+  catch { showToast('⚠️ No se pudo copiar'); }
   document.body.removeChild(ta);
 }
 
 function copyField(fieldId) {
   const inp = el(fieldId);
-  if (inp && inp.value) copyText(inp.value, 'ðŸ“‹ Link copiado');
+  if (inp && inp.value) copyText(inp.value, '📋 Link copiado');
 }
 
 let toastTimer;
@@ -530,7 +530,7 @@ function showToast(msg) {
   toastTimer = setTimeout(() => toast.classList.add('hidden'), 2800);
 }
 
-// â”€â”€ Boot â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Boot ───────────────────────────────────────────────────
 loadState();
 renderAll();
 navigateTo('dashboard');

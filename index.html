@@ -11,7 +11,7 @@
 
 <div class="app-shell">
 
-  <!-- â”€â”€ SIDEBAR (desktop) â”€â”€ -->
+  <!-- ── SIDEBAR (desktop) ── -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-icon">
@@ -67,7 +67,7 @@
     </div>
   </aside>
 
-  <!-- â”€â”€ MAIN â”€â”€ -->
+  <!-- ── MAIN ── -->
   <main class="main">
 
     <!-- Top bar (mobile) -->
@@ -82,14 +82,14 @@
       <button class="btn-primary-sm" onclick="openModal()">+ Negocio</button>
     </header>
 
-    <!-- â”€â”€ PAGE: DASHBOARD â”€â”€ -->
+    <!-- ── PAGE: DASHBOARD ── -->
     <div class="page active" id="page-dashboard">
 
       <div class="hero">
         <div class="hero-text">
           <p class="hero-eyebrow">Panel de control</p>
           <h1 class="hero-title">NFC Review Cards</h1>
-          <p class="hero-desc">GestionÃ¡ tus <strong>20 tarjetas NFC</strong> para Google Reviews y llevÃ¡ el control de tus ventas.</p>
+          <p class="hero-desc">Gestioná tus <strong>20 tarjetas NFC</strong> para Google Reviews y llevá el control de tus ventas.</p>
           <button class="btn-primary" onclick="openModal()">+ Agregar negocio</button>
         </div>
 
@@ -110,7 +110,7 @@
                   <span class="card-on-google">on Google</span>
                 </div>
               </div>
-              <div class="card-stars">â˜…â˜…â˜…â˜…â˜…</div>
+              <div class="card-stars">★★★★★</div>
               <div class="card-bottom-row">
                 <div class="card-phone-nfc">
                   <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
@@ -163,7 +163,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           </div>
           <div class="stat-num" id="stat-cost">$0</div>
-          <div class="stat-sub">InversiÃ³n tarjetas</div>
+          <div class="stat-sub">Inversión tarjetas</div>
         </div>
         <div class="stat-card gold">
           <div class="stat-top">
@@ -171,27 +171,27 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
           </div>
           <div class="stat-num" id="stat-profit">$0</div>
-          <div class="stat-sub">Ingresos âˆ’ Costo</div>
+          <div class="stat-sub">Ingresos − Costo</div>
         </div>
       </div>
 
       <!-- Recent businesses -->
       <div class="section-card">
         <div class="section-hdr">
-          <h3>Ãšltimos negocios</h3>
-          <button class="btn-text" onclick="navigateTo('negocios')">Ver todos â†’</button>
+          <h3>Últimos negocios</h3>
+          <button class="btn-text" onclick="navigateTo('negocios')">Ver todos →</button>
         </div>
         <div id="recent-list">
           <div class="empty-state">
-            <div class="empty-icon">ðŸª</div>
-            <p>TodavÃ­a no agregaste ningÃºn negocio</p>
+            <div class="empty-icon">🏪</div>
+            <p>Todavía no agregaste ningún negocio</p>
             <button class="btn-primary" onclick="openModal()">Agregar primer negocio</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- â”€â”€ PAGE: NEGOCIOS â”€â”€ -->
+    <!-- ── PAGE: NEGOCIOS ── -->
     <div class="page hidden" id="page-negocios">
       <div class="page-hdr">
         <div>
@@ -210,19 +210,19 @@
 
       <div class="businesses-grid" id="businesses-grid">
         <div class="empty-state">
-          <div class="empty-icon">ðŸª</div>
-          <p>No hay negocios cargados todavÃ­a</p>
+          <div class="empty-icon">🏪</div>
+          <p>No hay negocios cargados todavía</p>
           <button class="btn-primary" onclick="openModal()">Agregar primer negocio</button>
         </div>
       </div>
     </div>
 
-    <!-- â”€â”€ PAGE: NFC CONFIG â”€â”€ -->
+    <!-- ── PAGE: NFC CONFIG ── -->
     <div class="page hidden" id="page-nfc">
       <div class="page-hdr">
         <div>
           <h2>Configurar NFC</h2>
-          <p class="page-desc">GenerÃ¡ el link de Google Review para programar cada tarjeta</p>
+          <p class="page-desc">Generá el link de Google Review para programar cada tarjeta</p>
         </div>
       </div>
 
@@ -235,7 +235,7 @@
           </div>
           <div>
             <h3>Generador de Link NFC</h3>
-            <p>ConvertÃ­ el Place ID de Google en el link para NFC Tools</p>
+            <p>Convertí el Place ID de Google en el link para NFC Tools</p>
           </div>
         </div>
 
@@ -243,8 +243,8 @@
           <div class="nfc-step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <div class="step-title">EncontrÃ¡ el Place ID del negocio</div>
-              <p class="step-desc">UsÃ¡ el buscador oficial de Google para encontrar el Place ID.</p>
+              <div class="step-title">Encontrá el Place ID del negocio</div>
+              <p class="step-desc">Usá el buscador oficial de Google para encontrar el Place ID.</p>
               <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="btn-outline-blue">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 Abrir buscador de Place ID
@@ -255,10 +255,10 @@
           <div class="nfc-step">
             <div class="step-num">2</div>
             <div class="step-body">
-              <div class="step-title">PegÃ¡ el Place ID acÃ¡</div>
+              <div class="step-title">Pegá el Place ID acá</div>
               <div class="input-row">
                 <input id="place-id-input" type="text" class="form-input" placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" oninput="generateNfcLink()" />
-                <button class="btn-ghost-sm" onclick="clearPlaceId()">âœ•</button>
+                <button class="btn-ghost-sm" onclick="clearPlaceId()">✕</button>
               </div>
             </div>
           </div>
@@ -266,31 +266,31 @@
           <div class="nfc-step">
             <div class="step-num">3</div>
             <div class="step-body">
-              <div class="step-title">CopiÃ¡ el link completo para NFC Tools</div>
+              <div class="step-title">Copiá el link completo para NFC Tools</div>
               <div class="link-preview-box">
                 <div class="link-prefix">https://search.google.com/local/writereview?placeid=</div>
-                <div class="link-id" id="link-id-display">â€”</div>
+                <div class="link-id" id="link-id-display">—</div>
               </div>
               <div class="link-full-row">
                 <input id="full-link-input" type="text" class="form-input mono" readonly value="https://search.google.com/local/writereview?placeid=" />
                 <button id="copy-btn" class="btn-primary" onclick="copyNfcLink()" disabled>
-                  ðŸ“‹ Copiar
+                  📋 Copiar
                 </button>
               </div>
-              <div class="copy-toast hidden" id="copy-toast">âœ… Â¡Link copiado! Pegalo en NFC Tools</div>
+              <div class="copy-toast hidden" id="copy-toast">✅ ¡Link copiado! Pegalo en NFC Tools</div>
             </div>
           </div>
         </div>
 
         <div class="nfc-guide">
-          <h4>ðŸ“± CÃ³mo usar en NFC Tools</h4>
+          <h4>📱 Cómo usar en NFC Tools</h4>
           <ol>
-            <li>AbrÃ­ la app <strong>NFC Tools</strong> en tu celular</li>
-            <li>TocÃ¡ <strong>"Write"</strong></li>
-            <li>TocÃ¡ <strong>"Add a record"</strong></li>
-            <li>ElegÃ­ <strong>"URL / URI"</strong></li>
-            <li>PegÃ¡ el link copiado</li>
-            <li>TocÃ¡ <strong>"Write / OK"</strong> y acercÃ¡ tu celular a la tarjeta</li>
+            <li>Abrí la app <strong>NFC Tools</strong> en tu celular</li>
+            <li>Tocá <strong>"Write"</strong></li>
+            <li>Tocá <strong>"Add a record"</strong></li>
+            <li>Elegí <strong>"URL / URI"</strong></li>
+            <li>Pegá el link copiado</li>
+            <li>Tocá <strong>"Write / OK"</strong> y acercá tu celular a la tarjeta</li>
           </ol>
         </div>
       </div>
@@ -301,12 +301,12 @@
           <h3>Negocios configurados</h3>
         </div>
         <div id="nfc-biz-list">
-          <div class="empty-state"><p>AgregÃ¡ negocios con Place ID para verlos acÃ¡</p></div>
+          <div class="empty-state"><p>Agregá negocios con Place ID para verlos acá</p></div>
         </div>
       </div>
     </div>
 
-    <!-- â”€â”€ PAGE: FINANZAS â”€â”€ -->
+    <!-- ── PAGE: FINANZAS ── -->
     <div class="page hidden" id="page-finanzas">
       <div class="page-hdr">
         <div>
@@ -317,12 +317,12 @@
 
       <!-- Config -->
       <div class="section-card">
-        <h3>âš™ï¸ ConfiguraciÃ³n de costos</h3>
+        <h3>⚙️ Configuración de costos</h3>
         <div class="finance-inputs">
           <div class="form-group">
             <label class="form-label">Cantidad de tarjetas compradas</label>
             <div class="stepper">
-              <button type="button" class="stepper-btn" onclick="adjustCardsQty(-1)" aria-label="Restar tarjeta">âˆ’</button>
+              <button type="button" class="stepper-btn" onclick="adjustCardsQty(-1)" aria-label="Restar tarjeta">−</button>
               <input type="number" id="fin-cards-qty" value="20" min="1" class="stepper-input" inputmode="numeric" oninput="saveSettings();renderAll()">
               <button type="button" class="stepper-btn" onclick="adjustCardsQty(1)" aria-label="Sumar tarjeta">+</button>
             </div>
@@ -330,7 +330,7 @@
           <div class="form-group">
             <label class="form-label">Costo total de las tarjetas</label>
             <div class="stepper stepper-money">
-              <button type="button" class="stepper-btn" onclick="adjustTotalCost(-500)" aria-label="Restar 500 pesos">âˆ’</button>
+              <button type="button" class="stepper-btn" onclick="adjustTotalCost(-500)" aria-label="Restar 500 pesos">−</button>
               <div class="stepper-money-input">
                 <span class="stepper-currency">$</span>
                 <input type="number" id="fin-total-cost" value="0" min="0" class="stepper-input" inputmode="decimal" placeholder="0" oninput="saveSettings();renderAll()">
@@ -347,7 +347,7 @@
 
       <!-- P&L -->
       <div class="section-card">
-        <h3>ðŸ“Š Resultado</h3>
+        <h3>📊 Resultado</h3>
         <div class="pl-table">
           <div class="pl-row">
             <span class="pl-label">Ingresos totales</span>
@@ -355,7 +355,7 @@
           </div>
           <div class="pl-row">
             <span class="pl-label">Costo tarjetas vendidas</span>
-            <span class="pl-val red-text" id="pl-cost-sold">âˆ’$0</span>
+            <span class="pl-val red-text" id="pl-cost-sold">−$0</span>
           </div>
           <div class="pl-divider"></div>
           <div class="pl-row pl-total">
@@ -368,16 +368,16 @@
 
       <!-- Sales breakdown -->
       <div class="section-card">
-        <h3>ðŸ’° Detalle de ventas</h3>
+        <h3>💰 Detalle de ventas</h3>
         <div id="sales-list">
-          <div class="empty-state"><p>AgregÃ¡ negocios para ver el detalle</p></div>
+          <div class="empty-state"><p>Agregá negocios para ver el detalle</p></div>
         </div>
       </div>
     </div>
 
   </main><!-- /main -->
 
-  <!-- â”€â”€ BOTTOM NAV (mobile) â”€â”€ -->
+  <!-- ── BOTTOM NAV (mobile) ── -->
   <nav class="bottom-nav">
     <button class="bnav-btn active" data-page="dashboard">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -408,25 +408,25 @@
 
 </div><!-- /app-shell -->
 
-<!-- â”€â”€ MODAL: Add / Edit Business â”€â”€ -->
+<!-- ── MODAL: Add / Edit Business ── -->
 <div class="modal-overlay hidden" id="modal-overlay" onclick="overlayClose(event)">
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-hdr">
       <h3 id="modal-title">Agregar Negocio</h3>
-      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">âœ•</button>
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="edit-id" />
 
       <div class="form-group">
         <label class="form-label" for="f-name">Nombre del negocio *</label>
-        <input id="f-name" type="text" class="form-input" placeholder="Ej: PanaderÃ­a San JosÃ©" />
+        <input id="f-name" type="text" class="form-input" placeholder="Ej: Panadería San José" />
       </div>
 
       <div class="form-group">
         <label class="form-label" for="f-price">Precio de venta *</label>
         <div class="stepper stepper-money">
-          <button type="button" class="stepper-btn" onclick="adjustPrice(-500)" aria-label="Restar 500 pesos">âˆ’</button>
+          <button type="button" class="stepper-btn" onclick="adjustPrice(-500)" aria-label="Restar 500 pesos">−</button>
           <div class="stepper-money-input">
             <span class="stepper-currency">$</span>
             <input id="f-price" type="number" class="stepper-input" inputmode="decimal" placeholder="0" min="0" />
@@ -445,17 +445,17 @@
       <div class="form-group">
         <label class="form-label" for="f-placeid">
           Place ID de Google
-          <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="label-link">ðŸ” Buscar Place ID</a>
+          <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="label-link">🔍 Buscar Place ID</a>
         </label>
         <input id="f-placeid" type="text" class="form-input mono-sm" placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" oninput="autoFillReview()" />
-        <div class="form-hint">Al ingresar el Place ID, el link de review se genera automÃ¡ticamente</div>
+        <div class="form-hint">Al ingresar el Place ID, el link de review se genera automáticamente</div>
       </div>
 
       <div class="form-group">
         <label class="form-label" for="f-review">Link de Google Review</label>
         <div class="input-copy-row">
           <input id="f-review" type="url" class="form-input" placeholder="https://search.google.com/local/writereview?placeid=..." />
-          <button type="button" class="btn-ghost-sm" onclick="copyField('f-review')" title="Copiar link">ðŸ“‹</button>
+          <button type="button" class="btn-ghost-sm" onclick="copyField('f-review')" title="Copiar link">📋</button>
         </div>
       </div>
 

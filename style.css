@@ -790,6 +790,26 @@ img { max-width: 100%; }
 }
 .cost-per-card-row strong { color: var(--accent); font-size: 16px; }
 
+.btn-save-costos {
+  width: 100%;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--g-green);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  transition: background .15s, transform .1s;
+}
+.btn-save-costos:hover  { background: #2c9148; }
+.btn-save-costos:active { transform: scale(.98); }
+
 .pl-table { display: flex; flex-direction: column; gap: 0; }
 .pl-row {
   display: flex;

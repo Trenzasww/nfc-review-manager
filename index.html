@@ -317,13 +317,16 @@
 
       <!-- Config -->
       <div class="section-card">
-        <h3>⚙️ Configuración de costos</h3>
+        <div class="section-hdr">
+          <h3>⚙️ Configuración de costos</h3>
+          <span class="autosave-hint">💾 Se guarda solo</span>
+        </div>
         <div class="finance-inputs">
           <div class="form-group">
             <label class="form-label">Cantidad de tarjetas compradas</label>
             <div class="stepper">
               <button type="button" class="stepper-btn" onclick="adjustCardsQty(-1)" aria-label="Restar tarjeta">−</button>
-              <input type="number" id="fin-cards-qty" value="20" min="1" class="stepper-input" inputmode="numeric" oninput="saveSettings();renderAll()">
+              <input type="number" id="fin-cards-qty" value="20" min="1" class="stepper-input" inputmode="numeric" oninput="saveSettings();renderAll()" onblur="saveSettings(true)">
               <button type="button" class="stepper-btn" onclick="adjustCardsQty(1)" aria-label="Sumar tarjeta">+</button>
             </div>
           </div>
@@ -333,7 +336,7 @@
               <button type="button" class="stepper-btn" onclick="adjustTotalCost(-500)" aria-label="Restar 500 pesos">−</button>
               <div class="stepper-money-input">
                 <span class="stepper-currency">$</span>
-                <input type="number" id="fin-total-cost" value="0" min="0" class="stepper-input" inputmode="decimal" placeholder="0" oninput="saveSettings();renderAll()">
+                <input type="number" id="fin-total-cost" value="0" min="0" class="stepper-input" inputmode="decimal" placeholder="0" oninput="saveSettings();renderAll()" onblur="saveSettings(true)">
               </div>
               <button type="button" class="stepper-btn" onclick="adjustTotalCost(500)" aria-label="Sumar 500 pesos">+</button>
             </div>

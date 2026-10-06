@@ -28,12 +28,13 @@ function saveBizData() {
   try { localStorage.setItem('nfc_businesses', JSON.stringify(state.businesses)); } catch (e) {}
 }
 
-function saveSettings() {
+function saveSettings(notify) {
   const qty  = parseInt(document.getElementById('fin-cards-qty')?.value) || 20;
   const cost = parseFloat(document.getElementById('fin-total-cost')?.value) || 0;
   state.settings.cardsBought = Math.max(1, qty);
   state.settings.totalCost   = Math.max(0, cost);
   try { localStorage.setItem('nfc_settings', JSON.stringify(state.settings)); } catch (e) {}
+  if (notify) showToast('💾 Guardado');
 }
 
 // ── Navigation ─────────────────────────────────────────────
@@ -254,7 +255,7 @@ function adjustCardsQty(delta) {
   const inp = el('fin-cards-qty');
   if (!inp) return;
   stepNumber(inp, delta, 1);
-  saveSettings();
+  saveSettings(true);
   renderAll();
 }
 
@@ -262,7 +263,7 @@ function adjustTotalCost(delta) {
   const inp = el('fin-total-cost');
   if (!inp) return;
   stepNumber(inp, delta, 0);
-  saveSettings();
+  saveSettings(true);
   renderAll();
 }
 

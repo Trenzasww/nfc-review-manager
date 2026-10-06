@@ -321,11 +321,22 @@
         <div class="finance-inputs">
           <div class="form-group">
             <label class="form-label">Cantidad de tarjetas compradas</label>
-            <input type="number" id="fin-cards-qty" value="20" min="1" class="form-input" oninput="saveSettings();renderAll()">
+            <div class="stepper">
+              <button type="button" class="stepper-btn" onclick="adjustCardsQty(-1)" aria-label="Restar tarjeta">âˆ’</button>
+              <input type="number" id="fin-cards-qty" value="20" min="1" class="stepper-input" inputmode="numeric" oninput="saveSettings();renderAll()">
+              <button type="button" class="stepper-btn" onclick="adjustCardsQty(1)" aria-label="Sumar tarjeta">+</button>
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Costo total de las tarjetas ($)</label>
-            <input type="number" id="fin-total-cost" value="0" min="0" class="form-input" placeholder="0" oninput="saveSettings();renderAll()">
+            <label class="form-label">Costo total de las tarjetas</label>
+            <div class="stepper stepper-money">
+              <button type="button" class="stepper-btn" onclick="adjustTotalCost(-500)" aria-label="Restar 500 pesos">âˆ’</button>
+              <div class="stepper-money-input">
+                <span class="stepper-currency">$</span>
+                <input type="number" id="fin-total-cost" value="0" min="0" class="stepper-input" inputmode="decimal" placeholder="0" oninput="saveSettings();renderAll()">
+              </div>
+              <button type="button" class="stepper-btn" onclick="adjustTotalCost(500)" aria-label="Sumar 500 pesos">+</button>
+            </div>
           </div>
         </div>
         <div class="cost-per-card-row">
@@ -412,15 +423,21 @@
         <input id="f-name" type="text" class="form-input" placeholder="Ej: PanaderÃ­a San JosÃ©" />
       </div>
 
-      <div class="form-row-2">
-        <div class="form-group">
-          <label class="form-label" for="f-price">Precio de venta ($) *</label>
-          <input id="f-price" type="number" class="form-input" placeholder="0" min="0" />
+      <div class="form-group">
+        <label class="form-label" for="f-price">Precio de venta *</label>
+        <div class="stepper stepper-money">
+          <button type="button" class="stepper-btn" onclick="adjustPrice(-500)" aria-label="Restar 500 pesos">âˆ’</button>
+          <div class="stepper-money-input">
+            <span class="stepper-currency">$</span>
+            <input id="f-price" type="number" class="stepper-input" inputmode="decimal" placeholder="0" min="0" />
+          </div>
+          <button type="button" class="stepper-btn" onclick="adjustPrice(500)" aria-label="Sumar 500 pesos">+</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="f-date">Fecha de venta</label>
-          <input id="f-date" type="date" class="form-input" />
-        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-date">Fecha de venta</label>
+        <input id="f-date" type="date" class="form-input" />
       </div>
 
       <div class="form-divider"><span>Links de Google</span></div>

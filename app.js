@@ -242,6 +242,36 @@ function loadPlaceId(pid, link) {
   }
 }
 
+// â”€â”€ Steppers (+ / âˆ’) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function stepNumber(inputEl, delta, min) {
+  let v = parseFloat(inputEl.value) || 0;
+  v = Math.max(min, v + delta);
+  inputEl.value = v;
+  return v;
+}
+
+function adjustCardsQty(delta) {
+  const inp = el('fin-cards-qty');
+  if (!inp) return;
+  stepNumber(inp, delta, 1);
+  saveSettings();
+  renderAll();
+}
+
+function adjustTotalCost(delta) {
+  const inp = el('fin-total-cost');
+  if (!inp) return;
+  stepNumber(inp, delta, 0);
+  saveSettings();
+  renderAll();
+}
+
+function adjustPrice(delta) {
+  const inp = el('f-price');
+  if (!inp) return;
+  stepNumber(inp, delta, 0);
+}
+
 // â”€â”€ Finanzas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderFinanzas(s) {
   if (!s) s = getStats();

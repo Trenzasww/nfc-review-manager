@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NFC Review Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- â”€â”€ SIDEBAR (desktop) â”€â”€ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+          <path d="M8 14 Q11 8 14 11 Q17 8 20 14 Q17 20 14 17 Q11 20 8 14Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-main">NFC Manager</span>
+        <span class="logo-sub">Google Reviews</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-page="dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-page="negocios">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Negocios
+      </button>
+      <button class="nav-btn" data-page="nfc">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/>
+        </svg>
+        Configurar NFC
+      </button>
+      <button class="nav-btn" data-page="finanzas">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+        </svg>
+        Finanzas
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="progress-block">
+        <div class="progress-labels">
+          <span>Tarjetas vendidas</span>
+          <span id="sb-ratio">0 / 20</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="sb-fill" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- â”€â”€ MAIN â”€â”€ -->
+  <main class="main">
+
+    <!-- Top bar (mobile) -->
+    <header class="topbar">
+      <div class="topbar-brand">
+        <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="#4f46e5" stroke-width="2"/>
+          <path d="M8 14 Q11 8 14 11 Q17 8 20 14 Q17 20 14 17 Q11 20 8 14Z" fill="#4f46e5"/>
+        </svg>
+        <span>NFC Manager</span>
+      </div>
+      <button class="btn-primary-sm" onclick="openModal()">+ Negocio</button>
+    </header>
+
+    <!-- â”€â”€ PAGE: DASHBOARD â”€â”€ -->
+    <div class="page active" id="page-dashboard">
+
+      <div class="hero">
+        <div class="hero-text">
+          <p class="hero-eyebrow">Panel de control</p>
+          <h1 class="hero-title">NFC Review Cards</h1>
+          <p class="hero-desc">GestionÃ¡ tus <strong>20 tarjetas NFC</strong> para Google Reviews y llevÃ¡ el control de tus ventas.</p>
+          <button class="btn-primary" onclick="openModal()">+ Agregar negocio</button>
+        </div>
+
+        <div class="card-scene">
+          <div class="nfc-card" id="nfc3d">
+            <div class="card-shimmer"></div>
+            <div class="card-inner">
+              <div class="card-top-row">
+                <!-- Google G -->
+                <svg class="google-g-svg" width="46" height="46" viewBox="0 0 48 48">
+                  <path fill="#FFC107" d="M43.6 20H24v8h11.3C33.6 33.2 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.9 6.5 29.2 4.5 24 4.5 13.3 4.5 4.5 13.3 4.5 24S13.3 43.5 24 43.5C34 43.5 43 35.5 43 24c0-1.4-.2-2.7-.4-4z"/>
+                  <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.9 6.5 29.2 4.5 24 4.5c-7.6 0-14.2 4.3-17.7 10.2z"/>
+                  <path fill="#4CAF50" d="M24 43.5c5.2 0 9.8-1.9 13.3-5.1L31 33.5C29 35 26.6 36 24 36c-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.8 39.2 16.4 43.5 24 43.5z"/>
+                  <path fill="#1976D2" d="M43.6 20H24v8h11.3c-.8 2.2-2.3 4.1-4.3 5.4l6.6 4.9C41.2 34.9 43.5 30 43.5 24c0-1.4-.2-2.7-.4-4z"/>
+                </svg>
+                <div class="card-title-block">
+                  <span class="card-reciew">Review us</span>
+                  <span class="card-on-google">on Google</span>
+                </div>
+              </div>
+              <div class="card-stars">â˜…â˜…â˜…â˜…â˜…</div>
+              <div class="card-bottom-row">
+                <div class="card-phone-nfc">
+                  <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+                    <rect x="8" y="6" width="14" height="22" rx="2.5" stroke="white" stroke-width="1.6"/>
+                    <line x1="11" y1="25" x2="19" y2="25" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M24 19 Q27 19 27 16 Q27 13 24 13" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    <path d="M24 19 Q30 19 30 13 Q30 7 24 7" stroke="rgba(255,255,255,0.65)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                    <path d="M24 19 Q33 19 33 10 Q33 1 24 1" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="card-tap-block">
+                  <span class="card-tap-text">Tap your phone</span>
+                  <div class="card-nfc-badge">
+                    <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+                      <circle cx="16" cy="16" r="14" stroke="white" stroke-width="1.8"/>
+                      <path d="M16 22 Q20 16 16 10" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                      <path d="M16 22 Q23 16 16 10" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                      <path d="M16 22 Q27 16 16 10" stroke="rgba(255,255,255,0.4)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <span>NFC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-top">
+            <span class="stat-label">Cards Vendidas</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="stat-num" id="stat-sold">0</div>
+          <div class="stat-sub" id="stat-avail">de 20 disponibles</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-top">
+            <span class="stat-label">Ingresos</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="stat-num" id="stat-revenue">$0</div>
+          <div class="stat-sub">Total cobrado</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-top">
+            <span class="stat-label">Costo</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="stat-num" id="stat-cost">$0</div>
+          <div class="stat-sub">InversiÃ³n tarjetas</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-top">
+            <span class="stat-label">Ganancia Neta</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="stat-num" id="stat-profit">$0</div>
+          <div class="stat-sub">Ingresos âˆ’ Costo</div>
+        </div>
+      </div>
+
+      <!-- Recent businesses -->
+      <div class="section-card">
+        <div class="section-hdr">
+          <h3>Ãšltimos negocios</h3>
+          <button class="btn-text" onclick="navigateTo('negocios')">Ver todos â†’</button>
+        </div>
+        <div id="recent-list">
+          <div class="empty-state">
+            <div class="empty-icon">ðŸª</div>
+            <p>TodavÃ­a no agregaste ningÃºn negocio</p>
+            <button class="btn-primary" onclick="openModal()">Agregar primer negocio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- â”€â”€ PAGE: NEGOCIOS â”€â”€ -->
+    <div class="page hidden" id="page-negocios">
+      <div class="page-hdr">
+        <div>
+          <h2>Mis Negocios</h2>
+          <p class="page-desc">Todos los locales a los que vendiste una tarjeta NFC</p>
+        </div>
+        <button class="btn-primary" onclick="openModal()">+ Agregar negocio</button>
+      </div>
+
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input id="search-input" type="text" placeholder="Buscar negocio..." oninput="filterBusinesses()" />
+      </div>
+
+      <div class="businesses-grid" id="businesses-grid">
+        <div class="empty-state">
+          <div class="empty-icon">ðŸª</div>
+          <p>No hay negocios cargados todavÃ­a</p>
+          <button class="btn-primary" onclick="openModal()">Agregar primer negocio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- â”€â”€ PAGE: NFC CONFIG â”€â”€ -->
+    <div class="page hidden" id="page-nfc">
+      <div class="page-hdr">
+        <div>
+          <h2>Configurar NFC</h2>
+          <p class="page-desc">GenerÃ¡ el link de Google Review para programar cada tarjeta</p>
+        </div>
+      </div>
+
+      <div class="nfc-tool">
+        <div class="nfc-tool-header">
+          <div class="nfc-tool-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Generador de Link NFC</h3>
+            <p>ConvertÃ­ el Place ID de Google en el link para NFC Tools</p>
+          </div>
+        </div>
+
+        <div class="nfc-steps-flow">
+          <div class="nfc-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">EncontrÃ¡ el Place ID del negocio</div>
+              <p class="step-desc">UsÃ¡ el buscador oficial de Google para encontrar el Place ID.</p>
+              <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="btn-outline-blue">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Abrir buscador de Place ID
+              </a>
+            </div>
+          </div>
+
+          <div class="nfc-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">PegÃ¡ el Place ID acÃ¡</div>
+              <div class="input-row">
+                <input id="place-id-input" type="text" class="form-input" placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" oninput="generateNfcLink()" />
+                <button class="btn-ghost-sm" onclick="clearPlaceId()">âœ•</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="nfc-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">CopiÃ¡ el link completo para NFC Tools</div>
+              <div class="link-preview-box">
+                <div class="link-prefix">https://search.google.com/local/writereview?placeid=</div>
+                <div class="link-id" id="link-id-display">â€”</div>
+              </div>
+              <div class="link-full-row">
+                <input id="full-link-input" type="text" class="form-input mono" readonly value="https://search.google.com/local/writereview?placeid=" />
+                <button id="copy-btn" class="btn-primary" onclick="copyNfcLink()" disabled>
+                  ðŸ“‹ Copiar
+                </button>
+              </div>
+              <div class="copy-toast hidden" id="copy-toast">âœ… Â¡Link copiado! Pegalo en NFC Tools</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nfc-guide">
+          <h4>ðŸ“± CÃ³mo usar en NFC Tools</h4>
+          <ol>
+            <li>AbrÃ­ la app <strong>NFC Tools</strong> en tu celular</li>
+            <li>TocÃ¡ <strong>"Write"</strong></li>
+            <li>TocÃ¡ <strong>"Add a record"</strong></li>
+            <li>ElegÃ­ <strong>"URL / URI"</strong></li>
+            <li>PegÃ¡ el link copiado</li>
+            <li>TocÃ¡ <strong>"Write / OK"</strong> y acercÃ¡ tu celular a la tarjeta</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Negocios con Place ID -->
+      <div class="section-card" id="nfc-biz-section">
+        <div class="section-hdr">
+          <h3>Negocios configurados</h3>
+        </div>
+        <div id="nfc-biz-list">
+          <div class="empty-state"><p>AgregÃ¡ negocios con Place ID para verlos acÃ¡</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- â”€â”€ PAGE: FINANZAS â”€â”€ -->
+    <div class="page hidden" id="page-finanzas">
+      <div class="page-hdr">
+        <div>
+          <h2>Finanzas</h2>
+          <p class="page-desc">Control de costos, ingresos y ganancia neta</p>
+        </div>
+      </div>
+
+      <!-- Config -->
+      <div class="section-card">
+        <h3>âš™ï¸ ConfiguraciÃ³n de costos</h3>
+        <div class="finance-inputs">
+          <div class="form-group">
+            <label class="form-label">Cantidad de tarjetas compradas</label>
+            <input type="number" id="fin-cards-qty" value="20" min="1" class="form-input" oninput="saveSettings();renderAll()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Costo total de las tarjetas ($)</label>
+            <input type="number" id="fin-total-cost" value="0" min="0" class="form-input" placeholder="0" oninput="saveSettings();renderAll()">
+          </div>
+        </div>
+        <div class="cost-per-card-row">
+          <span>Costo por tarjeta:</span>
+          <strong id="cost-per-card">$0</strong>
+        </div>
+      </div>
+
+      <!-- P&L -->
+      <div class="section-card">
+        <h3>ðŸ“Š Resultado</h3>
+        <div class="pl-table">
+          <div class="pl-row">
+            <span class="pl-label">Ingresos totales</span>
+            <span class="pl-val green-text" id="pl-income">$0</span>
+          </div>
+          <div class="pl-row">
+            <span class="pl-label">Costo tarjetas vendidas</span>
+            <span class="pl-val red-text" id="pl-cost-sold">âˆ’$0</span>
+          </div>
+          <div class="pl-divider"></div>
+          <div class="pl-row pl-total">
+            <span class="pl-label">Ganancia Neta</span>
+            <span class="pl-val" id="pl-net">$0</span>
+          </div>
+        </div>
+        <div class="margin-badge" id="margin-badge"></div>
+      </div>
+
+      <!-- Sales breakdown -->
+      <div class="section-card">
+        <h3>ðŸ’° Detalle de ventas</h3>
+        <div id="sales-list">
+          <div class="empty-state"><p>AgregÃ¡ negocios para ver el detalle</p></div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /main -->
+
+  <!-- â”€â”€ BOTTOM NAV (mobile) â”€â”€ -->
+  <nav class="bottom-nav">
+    <button class="bnav-btn active" data-page="dashboard">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+      </svg>
+      <span>Dashboard</span>
+    </button>
+    <button class="bnav-btn" data-page="negocios">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Negocios</span>
+    </button>
+    <button class="bnav-btn" data-page="nfc">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/>
+      </svg>
+      <span>NFC</span>
+    </button>
+    <button class="bnav-btn" data-page="finanzas">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+      </svg>
+      <span>Finanzas</span>
+    </button>
+  </nav>
+
+</div><!-- /app-shell -->
+
+<!-- â”€â”€ MODAL: Add / Edit Business â”€â”€ -->
+<div class="modal-overlay hidden" id="modal-overlay" onclick="overlayClose(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-hdr">
+      <h3 id="modal-title">Agregar Negocio</h3>
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">âœ•</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id" />
+
+      <div class="form-group">
+        <label class="form-label" for="f-name">Nombre del negocio *</label>
+        <input id="f-name" type="text" class="form-input" placeholder="Ej: PanaderÃ­a San JosÃ©" />
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="f-price">Precio de venta ($) *</label>
+          <input id="f-price" type="number" class="form-input" placeholder="0" min="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-date">Fecha de venta</label>
+          <input id="f-date" type="date" class="form-input" />
+        </div>
+      </div>
+
+      <div class="form-divider"><span>Links de Google</span></div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-placeid">
+          Place ID de Google
+          <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="label-link">ðŸ” Buscar Place ID</a>
+        </label>
+        <input id="f-placeid" type="text" class="form-input mono-sm" placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" oninput="autoFillReview()" />
+        <div class="form-hint">Al ingresar el Place ID, el link de review se genera automÃ¡ticamente</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-review">Link de Google Review</label>
+        <div class="input-copy-row">
+          <input id="f-review" type="url" class="form-input" placeholder="https://search.google.com/local/writereview?placeid=..." />
+          <button type="button" class="btn-ghost-sm" onclick="copyField('f-review')" title="Copiar link">ðŸ“‹</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-maps">Link de Google Maps</label>
+        <input id="f-maps" type="url" class="form-input" placeholder="https://maps.google.com/..." />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-notes">Notas</label>
+        <textarea id="f-notes" class="form-input" rows="2" placeholder="Contacto, observaciones..."></textarea>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveBusiness()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="app-toast hidden" id="app-toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

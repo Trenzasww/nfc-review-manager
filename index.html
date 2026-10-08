@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<div class="money-bg" aria-hidden="true"></div>
+
 <div class="app-shell">
 
   <!-- ── SIDEBAR (desktop) ── -->
@@ -55,6 +57,7 @@
     </nav>
 
     <div class="sidebar-footer">
+      <div id="cloud-badge" class="cloud-badge off">💾 Solo en este dispositivo</div>
       <div class="progress-block">
         <div class="progress-labels">
           <span>Tarjetas vendidas</span>
@@ -74,8 +77,8 @@
     <header class="topbar">
       <div class="topbar-brand">
         <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="14" r="13" stroke="#4f46e5" stroke-width="2"/>
-          <path d="M8 14 Q11 8 14 11 Q17 8 20 14 Q17 20 14 17 Q11 20 8 14Z" fill="#4f46e5"/>
+          <circle cx="14" cy="14" r="13" stroke="#4285F4" stroke-width="2"/>
+          <path d="M8 14 Q11 8 14 11 Q17 8 20 14 Q17 20 14 17 Q11 20 8 14Z" fill="#4285F4"/>
         </svg>
         <span>NFC Manager</span>
       </div>
@@ -89,7 +92,7 @@
         <div class="hero-text">
           <p class="hero-eyebrow">Panel de control</p>
           <h1 class="hero-title">NFC Review Cards</h1>
-          <p class="hero-desc">Gestioná tus <strong>20 tarjetas NFC</strong> para Google Reviews y llevá el control de tus ventas.</p>
+          <p class="hero-desc">Gestioná tus <strong>tarjetas NFC</strong> para Google Reviews y llevá el control de tus ventas.</p>
           <button class="btn-primary" onclick="openModal()">+ Agregar negocio</button>
         </div>
 
@@ -98,7 +101,6 @@
             <div class="card-shimmer"></div>
             <div class="card-inner">
               <div class="card-top-row">
-                <!-- Google G -->
                 <svg class="google-g-svg" width="46" height="46" viewBox="0 0 48 48">
                   <path fill="#FFC107" d="M43.6 20H24v8h11.3C33.6 33.2 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.9 6.5 29.2 4.5 24 4.5 13.3 4.5 4.5 13.3 4.5 24S13.3 43.5 24 43.5C34 43.5 43 35.5 43 24c0-1.4-.2-2.7-.4-4z"/>
                   <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.9 6.5 29.2 4.5 24 4.5c-7.6 0-14.2 4.3-17.7 10.2z"/>
@@ -143,7 +145,7 @@
       <div class="stats-grid">
         <div class="stat-card blue">
           <div class="stat-top">
-            <span class="stat-label">Cards Vendidas</span>
+            <span class="stat-label">NFC Vendidas</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           </div>
           <div class="stat-num" id="stat-sold">0</div>
@@ -155,7 +157,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
           <div class="stat-num" id="stat-revenue">$0</div>
-          <div class="stat-sub">Total cobrado</div>
+          <div class="stat-sub">Total facturado</div>
         </div>
         <div class="stat-card red">
           <div class="stat-top">
@@ -173,6 +175,22 @@
           <div class="stat-num" id="stat-profit">$0</div>
           <div class="stat-sub">Ingresos − Costo</div>
         </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="section-card">
+        <div class="section-hdr">
+          <h3>📈 Ganancia por período</h3>
+        </div>
+        <div class="chart-range-row">
+          <button class="chart-range-btn" data-days="3" onclick="setChartDays(3)">3 días</button>
+          <button class="chart-range-btn" data-days="5" onclick="setChartDays(5)">5 días</button>
+          <button class="chart-range-btn active" data-days="7" onclick="setChartDays(7)">7 días</button>
+          <button class="chart-range-btn" data-days="14" onclick="setChartDays(14)">14 días</button>
+          <button class="chart-range-btn" data-days="30" onclick="setChartDays(30)">30 días</button>
+        </div>
+        <div class="chart-wrap"><canvas id="revenue-chart"></canvas></div>
+        <div class="chart-summary" id="chart-summary"></div>
       </div>
 
       <!-- Recent businesses -->
@@ -311,75 +329,121 @@
       <div class="page-hdr">
         <div>
           <h2>Finanzas</h2>
-          <p class="page-desc">Control de costos, ingresos y ganancia neta</p>
+          <p class="page-desc">Costos, ingresos, metas y proveedores</p>
         </div>
       </div>
 
-      <!-- Config -->
-      <div class="section-card">
-        <div class="section-hdr">
-          <h3>⚙️ Configuración de costos</h3>
-          <span class="autosave-hint">💾 Se guarda solo</span>
-        </div>
-        <div class="finance-inputs">
-          <div class="form-group">
-            <label class="form-label">Cantidad de tarjetas compradas</label>
-            <div class="stepper">
-              <button type="button" class="stepper-btn" onclick="adjustCardsQty(-1)" aria-label="Restar tarjeta">−</button>
-              <input type="number" id="fin-cards-qty" value="20" min="1" class="stepper-input" inputmode="numeric" oninput="saveSettings();renderAll()" onblur="saveSettings(true)">
-              <button type="button" class="stepper-btn" onclick="adjustCardsQty(1)" aria-label="Sumar tarjeta">+</button>
-            </div>
+      <div class="fin-tabs">
+        <button class="fin-tab-btn active" data-fintab="resumen" onclick="switchFinTab('resumen')">📊 Resumen</button>
+        <button class="fin-tab-btn" data-fintab="diario" onclick="switchFinTab('diario')">🗓️ Registro diario</button>
+        <button class="fin-tab-btn" data-fintab="metas" onclick="switchFinTab('metas')">🎯 Metas</button>
+        <button class="fin-tab-btn" data-fintab="proveedores" onclick="switchFinTab('proveedores')">📦 Proveedores</button>
+      </div>
+
+      <!-- TAB: Resumen -->
+      <div class="fin-tab-panel" data-fintab="resumen">
+        <div class="section-card">
+          <div class="section-hdr">
+            <h3>⚙️ Configuración de costos</h3>
+            <span class="autosave-hint">💾 Se guarda solo</span>
           </div>
-          <div class="form-group">
-            <label class="form-label">Costo total de las tarjetas</label>
-            <div class="stepper stepper-money">
-              <button type="button" class="stepper-btn" onclick="adjustTotalCost(-500)" aria-label="Restar 500 pesos">−</button>
-              <div class="stepper-money-input">
-                <span class="stepper-currency">$</span>
-                <input type="number" id="fin-total-cost" value="0" min="0" class="stepper-input" inputmode="decimal" placeholder="0" oninput="saveSettings();renderAll()" onblur="saveSettings(true)">
+          <div class="finance-inputs">
+            <div class="form-group">
+              <label class="form-label">Cantidad de tarjetas compradas</label>
+              <div class="stepper">
+                <button type="button" class="stepper-btn" onclick="adjustCardsQty(-1)" aria-label="Restar tarjeta">−</button>
+                <input type="number" id="fin-cards-qty" value="20" min="1" class="stepper-input" inputmode="numeric" oninput="saveSettings();renderAll()" onblur="saveSettings(true)">
+                <button type="button" class="stepper-btn" onclick="adjustCardsQty(1)" aria-label="Sumar tarjeta">+</button>
               </div>
-              <button type="button" class="stepper-btn" onclick="adjustTotalCost(500)" aria-label="Sumar 500 pesos">+</button>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Costo total de las tarjetas</label>
+              <div class="stepper stepper-money">
+                <button type="button" class="stepper-btn" onclick="adjustTotalCost(-500)" aria-label="Restar 500 pesos">−</button>
+                <div class="stepper-money-input">
+                  <span class="stepper-currency">$</span>
+                  <input type="number" id="fin-total-cost" value="0" min="0" class="stepper-input" inputmode="decimal" placeholder="0" oninput="saveSettings();renderAll()" onblur="saveSettings(true)">
+                </div>
+                <button type="button" class="stepper-btn" onclick="adjustTotalCost(500)" aria-label="Sumar 500 pesos">+</button>
+              </div>
             </div>
           </div>
+          <div class="cost-per-card-row">
+            <span>Costo por tarjeta:</span>
+            <strong id="cost-per-card">$0</strong>
+          </div>
+          <button type="button" class="btn-save-costos" id="btn-save-costos" onclick="saveSettings(true)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar
+          </button>
         </div>
-        <div class="cost-per-card-row">
-          <span>Costo por tarjeta:</span>
-          <strong id="cost-per-card">$0</strong>
+
+        <div class="section-card">
+          <h3>📊 Resultado</h3>
+          <div class="pl-table">
+            <div class="pl-row">
+              <span class="pl-label">Ingresos totales</span>
+              <span class="pl-val green-text" id="pl-income">$0</span>
+            </div>
+            <div class="pl-row">
+              <span class="pl-label">Costo tarjetas vendidas</span>
+              <span class="pl-val red-text" id="pl-cost-sold">−$0</span>
+            </div>
+            <div class="pl-divider"></div>
+            <div class="pl-row pl-total">
+              <span class="pl-label">Ganancia Neta</span>
+              <span class="pl-val" id="pl-net">$0</span>
+            </div>
+          </div>
+          <div class="margin-badge" id="margin-badge"></div>
         </div>
-        <button type="button" class="btn-save-costos" id="btn-save-costos" onclick="saveSettings(true)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-          Guardar
-        </button>
+
+        <div class="section-card">
+          <h3>💰 Detalle de ventas</h3>
+          <div id="sales-list">
+            <div class="empty-state"><p>Agregá negocios para ver el detalle</p></div>
+          </div>
+        </div>
       </div>
 
-      <!-- P&L -->
-      <div class="section-card">
-        <h3>📊 Resultado</h3>
-        <div class="pl-table">
-          <div class="pl-row">
-            <span class="pl-label">Ingresos totales</span>
-            <span class="pl-val green-text" id="pl-income">$0</span>
+      <!-- TAB: Registro diario -->
+      <div class="fin-tab-panel hidden" data-fintab="diario">
+        <div class="section-card">
+          <div class="section-hdr">
+            <h3>🗓️ Registro diario de ventas</h3>
           </div>
-          <div class="pl-row">
-            <span class="pl-label">Costo tarjetas vendidas</span>
-            <span class="pl-val red-text" id="pl-cost-sold">−$0</span>
-          </div>
-          <div class="pl-divider"></div>
-          <div class="pl-row pl-total">
-            <span class="pl-label">Ganancia Neta</span>
-            <span class="pl-val" id="pl-net">$0</span>
+          <div id="daily-log-list">
+            <div class="empty-state"><p>Todavía no hay ventas registradas</p></div>
           </div>
         </div>
-        <div class="margin-badge" id="margin-badge"></div>
       </div>
 
-      <!-- Sales breakdown -->
-      <div class="section-card">
-        <h3>💰 Detalle de ventas</h3>
-        <div id="sales-list">
-          <div class="empty-state"><p>Agregá negocios para ver el detalle</p></div>
+      <!-- TAB: Metas -->
+      <div class="fin-tab-panel hidden" data-fintab="metas">
+        <div class="section-card">
+          <div class="section-hdr">
+            <h3>🎯 Metas de facturación</h3>
+            <button class="btn-primary-sm" onclick="openGoalModal()">+ Nueva meta</button>
+          </div>
+          <div id="goals-list" class="goals-grid">
+            <div class="empty-state"><p>Todavía no creaste ninguna meta</p></div>
+          </div>
         </div>
       </div>
+
+      <!-- TAB: Proveedores -->
+      <div class="fin-tab-panel hidden" data-fintab="proveedores">
+        <div class="section-card">
+          <div class="section-hdr">
+            <h3>📦 Proveedores de tarjetas NFC</h3>
+            <button class="btn-primary-sm" onclick="openProviderModal()">+ Nuevo proveedor</button>
+          </div>
+          <div id="providers-list" class="providers-grid">
+            <div class="empty-state"><p>Todavía no agregaste proveedores</p></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </main><!-- /main -->
@@ -415,65 +479,118 @@
 
 </div><!-- /app-shell -->
 
-<!-- ── MODAL: Add / Edit Business ── -->
+<!-- ── MODAL: Add / Edit Business (2 modos) ── -->
 <div class="modal-overlay hidden" id="modal-overlay" onclick="overlayClose(event)">
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-hdr">
       <h3 id="modal-title">Agregar Negocio</h3>
       <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
     </div>
+
+    <div class="mode-tabs">
+      <button type="button" class="mode-tab-btn active" data-mode="detailed" onclick="setAddMode('detailed')">📝 Completo</button>
+      <button type="button" class="mode-tab-btn" data-mode="simple" onclick="setAddMode('simple')">⚡ Rápido</button>
+    </div>
+
     <div class="modal-body">
       <input type="hidden" id="edit-id" />
 
-      <div class="form-group">
-        <label class="form-label" for="f-name">Nombre del negocio *</label>
-        <input id="f-name" type="text" class="form-input" placeholder="Ej: Panadería San José" />
-      </div>
+      <!-- Modo completo -->
+      <div class="mode-panel" data-mode="detailed">
+        <div class="form-group">
+          <label class="form-label" for="f-name">Nombre del negocio *</label>
+          <input id="f-name" type="text" class="form-input" placeholder="Ej: Panadería San José" />
+        </div>
 
-      <div class="form-group">
-        <label class="form-label" for="f-price">Precio de venta *</label>
-        <div class="stepper stepper-money">
-          <button type="button" class="stepper-btn" onclick="adjustPrice(-500)" aria-label="Restar 500 pesos">−</button>
-          <div class="stepper-money-input">
-            <span class="stepper-currency">$</span>
-            <input id="f-price" type="number" class="stepper-input" inputmode="decimal" placeholder="0" min="0" />
+        <div class="form-group">
+          <label class="form-label" for="f-qty">Cantidad de NFC vendidas</label>
+          <div class="stepper">
+            <button type="button" class="stepper-btn" onclick="adjustQty(-1)" aria-label="Restar">−</button>
+            <input id="f-qty" type="number" class="stepper-input" value="1" min="1" inputmode="numeric" />
+            <button type="button" class="stepper-btn" onclick="adjustQty(1)" aria-label="Sumar">+</button>
           </div>
-          <button type="button" class="stepper-btn" onclick="adjustPrice(500)" aria-label="Sumar 500 pesos">+</button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-price">Precio de venta *</label>
+          <div class="stepper stepper-money">
+            <button type="button" class="stepper-btn" onclick="adjustPrice(-500)" aria-label="Restar 500 pesos">−</button>
+            <div class="stepper-money-input">
+              <span class="stepper-currency">$</span>
+              <input id="f-price" type="number" class="stepper-input" inputmode="decimal" placeholder="0" min="0" />
+            </div>
+            <button type="button" class="stepper-btn" onclick="adjustPrice(500)" aria-label="Sumar 500 pesos">+</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-date">Fecha de venta</label>
+          <input id="f-date" type="date" class="form-input" />
+        </div>
+
+        <div class="form-divider"><span>Links de Google</span></div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-placeid">
+            Place ID de Google
+            <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="label-link">🔍 Buscar Place ID</a>
+          </label>
+          <input id="f-placeid" type="text" class="form-input mono-sm" placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" oninput="autoFillReview()" />
+          <div class="form-hint">Al ingresar el Place ID, el link de review se genera automáticamente</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-review">Link de Google Review</label>
+          <div class="input-copy-row">
+            <input id="f-review" type="url" class="form-input" placeholder="https://search.google.com/local/writereview?placeid=..." />
+            <button type="button" class="btn-ghost-sm" onclick="copyField('f-review')" title="Copiar link">📋</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-maps">Link de Google Maps</label>
+          <input id="f-maps" type="url" class="form-input" placeholder="https://maps.google.com/..." />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="f-notes">Notas</label>
+          <textarea id="f-notes" class="form-input" rows="2" placeholder="Contacto, observaciones..."></textarea>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="f-date">Fecha de venta</label>
-        <input id="f-date" type="date" class="form-input" />
-      </div>
-
-      <div class="form-divider"><span>Links de Google</span></div>
-
-      <div class="form-group">
-        <label class="form-label" for="f-placeid">
-          Place ID de Google
-          <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="label-link">🔍 Buscar Place ID</a>
-        </label>
-        <input id="f-placeid" type="text" class="form-input mono-sm" placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" oninput="autoFillReview()" />
-        <div class="form-hint">Al ingresar el Place ID, el link de review se genera automáticamente</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="f-review">Link de Google Review</label>
-        <div class="input-copy-row">
-          <input id="f-review" type="url" class="form-input" placeholder="https://search.google.com/local/writereview?placeid=..." />
-          <button type="button" class="btn-ghost-sm" onclick="copyField('f-review')" title="Copiar link">📋</button>
+      <!-- Modo rápido -->
+      <div class="mode-panel hidden" data-mode="simple">
+        <div class="form-group">
+          <label class="form-label" for="fs-name">Nombre del negocio *</label>
+          <input id="fs-name" type="text" class="form-input" placeholder="Ej: Kiosco Don Pedro" />
         </div>
-      </div>
 
-      <div class="form-group">
-        <label class="form-label" for="f-maps">Link de Google Maps</label>
-        <input id="f-maps" type="url" class="form-input" placeholder="https://maps.google.com/..." />
-      </div>
+        <div class="form-group">
+          <label class="form-label" for="fs-qty">Cantidad de NFC vendidos *</label>
+          <div class="stepper">
+            <button type="button" class="stepper-btn" onclick="adjustSimpleQty(-1)" aria-label="Restar">−</button>
+            <input id="fs-qty" type="number" class="stepper-input" value="1" min="1" inputmode="numeric" />
+            <button type="button" class="stepper-btn" onclick="adjustSimpleQty(1)" aria-label="Sumar">+</button>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label class="form-label" for="f-notes">Notas</label>
-        <textarea id="f-notes" class="form-input" rows="2" placeholder="Contacto, observaciones..."></textarea>
+        <div class="form-group">
+          <label class="form-label" for="fs-price">Precio total de venta *</label>
+          <div class="stepper stepper-money">
+            <button type="button" class="stepper-btn" onclick="adjustSimplePrice(-500)" aria-label="Restar 500 pesos">−</button>
+            <div class="stepper-money-input">
+              <span class="stepper-currency">$</span>
+              <input id="fs-price" type="number" class="stepper-input" inputmode="decimal" placeholder="0" min="0" />
+            </div>
+            <button type="button" class="stepper-btn" onclick="adjustSimplePrice(500)" aria-label="Sumar 500 pesos">+</button>
+          </div>
+          <div class="form-hint">Escribí el monto total cobrado por todas las unidades</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="fs-date">Fecha de venta</label>
+          <input id="fs-date" type="date" class="form-input" />
+        </div>
       </div>
     </div>
     <div class="modal-ftr">
@@ -483,9 +600,82 @@
   </div>
 </div>
 
+<!-- ── MODAL: Meta ── -->
+<div class="modal-overlay hidden" id="goal-modal-overlay" onclick="goalOverlayClose(event)">
+  <div class="modal modal-sm" role="dialog" aria-modal="true">
+    <div class="modal-hdr">
+      <h3>🎯 Nueva Meta</h3>
+      <button class="modal-close" onclick="closeGoalModal()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="g-title">Título de la meta *</label>
+        <input id="g-title" type="text" class="form-input" placeholder="Ej: Primer millón de facturación" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="g-amount">Monto objetivo *</label>
+        <div class="stepper stepper-money">
+          <button type="button" class="stepper-btn" onclick="adjustGoalAmount(-10000)" aria-label="Restar">−</button>
+          <div class="stepper-money-input">
+            <span class="stepper-currency">$</span>
+            <input id="g-amount" type="number" class="stepper-input" inputmode="decimal" placeholder="1000000" min="0" />
+          </div>
+          <button type="button" class="stepper-btn" onclick="adjustGoalAmount(10000)" aria-label="Sumar">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-ghost" onclick="closeGoalModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveGoal()">Crear meta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL: Proveedor ── -->
+<div class="modal-overlay hidden" id="provider-modal-overlay" onclick="providerOverlayClose(event)">
+  <div class="modal modal-sm" role="dialog" aria-modal="true">
+    <div class="modal-hdr">
+      <h3 id="provider-modal-title">Agregar Proveedor</h3>
+      <button class="modal-close" onclick="closeProviderModal()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="p-edit-id" />
+      <div class="form-group">
+        <label class="form-label" for="p-name">Nombre del proveedor *</label>
+        <input id="p-name" type="text" class="form-input" placeholder="Ej: AliExpress - Tarjetas NFC NTAG215" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="p-link">Link</label>
+        <input id="p-link" type="url" class="form-input" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="p-cost">Costo</label>
+        <input id="p-cost" type="text" class="form-input" placeholder="Ej: $350 c/u (pack de 50)" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="p-qty">Cantidad a comprar</label>
+        <input id="p-qty" type="text" class="form-input" placeholder="Ej: 100 unidades por pedido" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="p-notes">Notas</label>
+        <textarea id="p-notes" class="form-input" rows="2" placeholder="Tiempos de entrega, contacto, etc."></textarea>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-ghost" onclick="closeProviderModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveProvider()">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="app-toast hidden" id="app-toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

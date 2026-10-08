@@ -43,8 +43,8 @@
 */
 
 window.SUPABASE_CONFIG = {
-  url: "",
-  anonKey: ""
+  url: "https://zjunkrwildzxvppuberd.supabase.co",
+  anonKey: "sb_publishable_dFginXnIUL9RVTPaPAW4sg_BkmNTIEC"
 };
 
 window.CLOUD_SYNC_ENABLED = !!(window.SUPABASE_CONFIG.url && window.SUPABASE_CONFIG.anonKey);

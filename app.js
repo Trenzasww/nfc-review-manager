@@ -16,56 +16,76 @@ let state = {
   addMode: 'detailed'
 };
 
-// ── Cloud sync (optional Firebase) ──────────────────────────
+// ── Cloud sync (optional Supabase) ──────────────────────────
 const cloud = {
   ready: false,
-  db: null,
-  docRef: null,
-  lastPushedJSON: '',
+  client: null,
+  lastUpdatedAt: 0,
   pushTimer: null,
+  pollTimer: null,
 
   async init() {
-    if (!window.CLOUD_SYNC_ENABLED || !window.firebase) return;
+    if (!window.CLOUD_SYNC_ENABLED || !window.supabase) return;
     try {
-      firebase.initializeApp(window.FIREBASE_CONFIG);
-      await firebase.auth().signInAnonymously();
-      this.db = firebase.firestore();
-      this.docRef = this.db.collection('nfc_manager').doc('shared');
+      this.client = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey);
+      const { data, error } = await this.client.from('nfc_manager').select('*').eq('id', 'shared').maybeSingle();
+      if (error) throw error;
+
+      if (data) {
+        this.applyIncoming(data, true);
+      } else {
+        await this.push(true);
+      }
+
       this.ready = true;
       setCloudBadge('on');
-
-      this.docRef.onSnapshot(snap => {
-        if (!snap.exists) return;
-        const data = snap.data();
-        const incoming = JSON.stringify(data);
-        if (incoming === this.lastPushedJSON) return; // our own write echoing back
-        if (Array.isArray(data.businesses)) state.businesses = data.businesses;
-        if (Array.isArray(data.goals))      state.goals      = data.goals;
-        if (Array.isArray(data.providers))  state.providers  = data.providers;
-        if (data.settings) state.settings = Object.assign(state.settings, data.settings);
-        saveLocal();
-        renderAll();
-        showToast('☁️ Datos sincronizados');
-      }, () => setCloudBadge('error'));
+      this.pollTimer = setInterval(() => this.poll(), 8000);
     } catch (e) {
       setCloudBadge('error');
     }
   },
 
-  push() {
-    if (!this.ready || !this.docRef) return;
+  applyIncoming(data, silent) {
+    if (!data || data.updated_at === this.lastUpdatedAt) return;
+    this.lastUpdatedAt = data.updated_at || 0;
+    if (Array.isArray(data.businesses)) state.businesses = data.businesses;
+    if (Array.isArray(data.goals))      state.goals      = data.goals;
+    if (Array.isArray(data.providers))  state.providers  = data.providers;
+    if (data.settings) state.settings = Object.assign(state.settings, data.settings);
+    saveLocal();
+    renderAll();
+    if (!silent) showToast('☁️ Datos sincronizados');
+  },
+
+  async poll() {
+    if (!this.ready || !this.client) return;
+    try {
+      const { data, error } = await this.client.from('nfc_manager').select('*').eq('id', 'shared').maybeSingle();
+      if (error) throw error;
+      this.applyIncoming(data, false);
+    } catch (e) { setCloudBadge('error'); }
+  },
+
+  push(immediate) {
+    if (!window.CLOUD_SYNC_ENABLED) return;
     clearTimeout(this.pushTimer);
-    this.pushTimer = setTimeout(() => {
+    const doPush = async () => {
+      if (!this.client) return;
+      const updatedAt = Date.now();
       const payload = {
+        id: 'shared',
         businesses: state.businesses,
         goals: state.goals,
         providers: state.providers,
         settings: state.settings,
-        updatedAt: Date.now()
+        updated_at: updatedAt
       };
-      this.lastPushedJSON = JSON.stringify(payload);
-      this.docRef.set(payload).catch(() => setCloudBadge('error'));
-    }, 500);
+      this.lastUpdatedAt = updatedAt;
+      const { error } = await this.client.from('nfc_manager').upsert(payload);
+      if (error) setCloudBadge('error'); else if (this.ready) setCloudBadge('on');
+    };
+    if (immediate) return doPush();
+    this.pushTimer = setTimeout(doPush, 500);
   }
 };
 
